@@ -31,5 +31,6 @@ Route::group([
     Route::get('/offers', [\App\Http\Controllers\OfferController::class, 'all']);
     Route::post('/offers', [\App\Http\Controllers\OfferController::class, 'create']);
     Route::get('/offers/{id}', [\App\Http\Controllers\OfferController::class, 'offerById']);
+    Route::put('/offers/{id}', [\App\Http\Controllers\OfferController::class, 'edit']);
 });
 

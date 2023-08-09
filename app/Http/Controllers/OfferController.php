@@ -35,12 +35,29 @@ class OfferController extends Controller
         return response()->json(["message" => "Offer added."]);
     }
 
-    public function offerById(Request $request)
+    public function offerById($id)
     {
         $user = JWTAuth::toUser(JWTAuth::getToken());
 
-        $offer = $user->offers()->findOrFail($request->id);
+        $offer = $user->offers()->findOrFail($id);
 
         return response()->json($offer);
     }
+
+    public function edit($id, Request $request)
+    {
+        $user = JWTAuth::toUser(JWTAuth::getToken());
+
+        $offer = $user->offers()->findOrFail($id);
+
+        // TODO(radu): validate fields
+        $offer->insurance_premium = $request->insurance_premium ?: $offer->insurance_premium;
+        $offer->insured_name = $request->insured_name ?: $offer->insured_name;
+        $offer->insured_cnp = $request->insured_cnp ?: $offer->insured_cnp;
+
+        $user->offers()->save($offer);
+
+        return response()->json(["message" => "Offer $offer->id edited."]);
+    }
+
 }
