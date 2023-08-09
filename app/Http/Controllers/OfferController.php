@@ -9,11 +9,11 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 class OfferController extends Controller
 {
 
-    public function offers()
+    public function all()
     {
         $user = JWTAuth::toUser(JWTAuth::getToken());
 
-        $offers = $user->offers()->get();
+        $offers = $user->offers()->select('id', 'issue_date', 'insurance_premium')->get();
 
         return response()->json($offers);
     }
@@ -33,5 +33,14 @@ class OfferController extends Controller
         $user->offers()->save($offer);
 
         return response()->json(["message" => "Offer added."]);
+    }
+
+    public function offerById(Request $request)
+    {
+        $user = JWTAuth::toUser(JWTAuth::getToken());
+
+        $offer = $user->offers()->findOrFail($request->id);
+
+        return response()->json($offer);
     }
 }
