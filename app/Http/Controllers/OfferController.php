@@ -60,4 +60,20 @@ class OfferController extends Controller
         return response()->json(["message" => "Offer $offer->id edited."]);
     }
 
+    public function cancel($id)
+    {
+        $user = JWTAuth::toUser(JWTAuth::getToken());
+
+        $offer = $user->offers()->findOrFail($id);
+
+        if (!$offer->available) {
+            return response()->json(["message" => "Offer $offer->id already canceled."]);
+        }
+
+        $offer->available = 0;
+        $user->offers()->save($offer);
+
+        return response()->json(["message" => "Offer $offer->id canceled."]);
+    }
+
 }

@@ -32,5 +32,6 @@ Route::group([
     Route::post('/offers', [\App\Http\Controllers\OfferController::class, 'create']);
     Route::get('/offers/{id}', [\App\Http\Controllers\OfferController::class, 'offerById']);
     Route::put('/offers/{id}', [\App\Http\Controllers\OfferController::class, 'edit']);
+    Route::patch('/offers/{id}/cancel', [\App\Http\Controllers\OfferController::class, 'cancel']);
 });
 
