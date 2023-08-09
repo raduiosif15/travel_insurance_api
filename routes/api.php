@@ -23,3 +23,12 @@ Route::group([
     Route::post('/refresh', [AuthController::class, 'refresh']);
     Route::get('/user-profile', [AuthController::class, 'userProfile']);
 });
+
+
+Route::group([
+    'middleware' => 'auth'
+], function ($router) {
+    Route::get('/offers', [\App\Http\Controllers\OfferController::class, 'offers']);
+    Route::post('/offers', [\App\Http\Controllers\OfferController::class, 'create']);
+});
+
